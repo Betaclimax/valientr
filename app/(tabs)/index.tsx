@@ -62,7 +62,7 @@ export default function App() {
           </TouchableOpacity>
           <View style={styles.loginContainer}>
             <Text style={styles.loginText}>Already have an account?</Text>
-            <TouchableOpacity onPress={() => router.push('/explore')}>
+            <TouchableOpacity onPress={() => router.push('/login/login')}>
               <Text style={styles.loginLink}>Log In</Text>
             </TouchableOpacity>
           </View>
