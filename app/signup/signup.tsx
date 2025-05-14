@@ -1,8 +1,8 @@
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { Image, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-export default function LoginScreen() {
+export default function SignupScreen() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,7 +18,7 @@ export default function LoginScreen() {
 
   const handleSignUp = () => {
     console.log('Sign Up pressed');
-    router.push('../signup/signup'); 
+    // router.push('/signup'); 
   };
 
   const handleGoogleLogin = () => {
@@ -31,7 +31,7 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <View style={styles.backButton} >
         <TouchableOpacity onPress={() => router.back()}>
@@ -41,10 +41,32 @@ export default function LoginScreen() {
           />
         </TouchableOpacity>
       </View>
-      <Text style={styles.header}>Welcome Back</Text>
+      <Text style={styles.header}>Create Account</Text>
       <Text style={styles.description}>
-        Enter your existing details below to access Valiant Clinic App features
+        Welcome to Valiant Clinic. Fill this form to access full features and treatment offers of Valiant Clinic
       </Text>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>First Name</Text>
+        <TextInput
+          style={styles.input}
+          placeholderTextColor="#3D3D3D"
+        //   value={email}
+        //   onChangeText={setEmail}
+        //   keyboardType="email-address"
+          autoCapitalize="none"
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Last Name</Text>
+        <TextInput
+          style={styles.input}
+          placeholderTextColor="#3D3D3D"
+        //   value={email}
+        //   onChangeText={setEmail}
+        //   keyboardType="email-address"
+          autoCapitalize="none"
+        />
+      </View>
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Email Address</Text>
         <TextInput
@@ -108,7 +130,7 @@ export default function LoginScreen() {
         />
         <Text style={styles.socialButtonText}>Continue with Apple</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -258,7 +280,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 48,
     paddingVertical: 15,
-    marginBottom: 15,
+    marginBottom: 105,
   },
   LeftIcon: {
     width: 32,
