@@ -1,6 +1,7 @@
 import { useGlobalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, Image, ImageBackground, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import { Animated, Image, ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import Swiper from 'react-native-swiper';
 
 interface SpecialistButtonProps {
   name: string;
@@ -11,7 +12,7 @@ interface SpecialistButtonProps {
   index: number;
 }
 
-export default function Home() {
+export default function valiant() {
   const { width } = useWindowDimensions();
   const [activeSpecialist, setActiveSpecialist] = useState('Cardiologist');
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -22,38 +23,13 @@ export default function Home() {
   const params = useGlobalSearchParams();
   const [currentPage, setCurrentPage] = useState(0);
 
-  const goprofile = () => {
-    router.push('../Profile/profile');
-  }
-   const goValiant = () => {
-    router.push('../Valiant/valiant')
-   }
+  const goHome = () => {
+    router.push('../Home/home');
+  };
 
   const cardAnimations = useRef(
     Array(6).fill(null).map(() => new Animated.Value(0))
   ).current;
-
-  const pages = [
-    {
-      title: 'Medical Check Up',
-      description: 'Understand your body better by checking personal health'
-    },
-    {
-      title: 'Medical Check up2',
-      description: 'personalized',
-    },
-    {
-      title: 'Medical Check up3',
-      description: 'delivering personalized support for a better you',
-    },
-  ];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentPage((prevPage) => (prevPage + 1) % pages.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     const animations = cardAnimations.map((anim, index) =>
@@ -67,8 +43,6 @@ export default function Home() {
     );
     Animated.stagger(200, animations).start();
   }, []);
-
-  const currentPageData = pages[currentPage];
 
   const getFirstLetter = (text: string) => {
     if (!text) return '';
@@ -133,12 +107,6 @@ export default function Home() {
           <View style={[styles.specialistCard, isActive ? styles.specialistCardActive : styles.specialistCardInactive]}>
             <View style={styles.cardTop}>
               <Text style={styles.specialistName}>{name}</Text>
-              <Text style={styles.specialistCount}>{activeCount} doctors</Text>
-            </View>
-            <View style={styles.cardSeparator} />
-            <View style={styles.cardBottom}>
-              <Text style={styles.activeConsult}>Active Consult</Text>
-              <Text style={styles.activeConsultNumber}>{isActive ? (activeCount > 30 ? 24 : activeCount) : ''}</Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -161,67 +129,17 @@ export default function Home() {
         <View style={styles.welcomeSection}>
           <View style={styles.welcomeHeader}>
             <View style={styles.welcomeContent}>
-              <Text style={styles.welcomeText}>Hi, Amanda</Text>
+              <Text style={styles.welcomeText}>My Valiant</Text>
               <View style={styles.appointmentInfo}>
-                <Text style={styles.comingText}>You have </Text>
-                <Text style={styles.appointmentText}>0 appointment</Text>
+                <Text style={styles.comingText}>Explore Valiant services to imrpove your healthcare journey</Text>
               </View>
-            </View>
-            <TouchableOpacity onPress={goprofile}>
-                <View style={styles.userIcon}>
-                <Text style={styles.userInitial}>{getFirstLetter(firstName)}{getFirstLetter(lastName)}</Text>
-            </View>
-            </TouchableOpacity>           
-          </View>
-          <ImageBackground
-            source={require('../../assets/home/banner.png')}
-            style={styles.welcomeBanner}
-            imageStyle={{ borderRadius: 24 }}
-          >
-            <View style={styles.bannerContent}>
-              <Text style={styles.bannerTitle}>{currentPageData.title}</Text>
-              <Text style={styles.bannerDescription}>{currentPageData.description}</Text>
-              <TouchableOpacity style={styles.tryNowButton} onPress={handleTryNow}>
-                <Text style={styles.tryNowText}>Try Now</Text>
-                <Image
-                  source={require('../../assets/icon/Icon.png')}
-                  style={styles.arrowIcon}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.dots}>
-              {pages.map((_, index) => (
-                <View
-                  key={index}
-                  style={[styles.dot, { opacity: index === currentPage ? 1 : 0.3 }]}
-                />
-              ))}
-            </View>
-          </ImageBackground>
-        </View>
-
-        {/* Search Bar */}
-        <View style={styles.searchContainer}>
-          <View style={styles.searchInputWrapper}>
-            <TextInput
-              style={styles.searchInput}
-              placeholder="Search for doctors/specialists..."
-              placeholderTextColor="#666"
-            />
-            <Image
-              source={require('../../assets/icon/search.png')}
-              style={styles.searchIcon}
-            />
+            </View>         
           </View>
         </View>
 
-        {/* Specialist Category Section */}
         <View style={styles.specialistSection}>
           <View style={styles.sectionTitleContainer}>
-            <Text style={styles.sectionTitle}>Specialists Category</Text>
-            <TouchableOpacity>
-              <Text style={styles.viewAll}>View All</Text>
-            </TouchableOpacity>
+            <Text style={styles.sectionTitle}>Health & Wellness</Text>
           </View>
           <ScrollView
             horizontal
@@ -229,67 +147,132 @@ export default function Home() {
             contentContainerStyle={styles.specialistGrid}
           >
             <SpecialistButton
-              name="Cardiologist"
-              image={require('../../assets/home/heart.png')}
+              name="Health Checkups"
+              image={require('../../assets/icon/check.png')}
               activeCount={230}
-              isActive={activeSpecialist === 'Cardiologist'}
-              onPress={() => setActiveSpecialist('Cardiologist')}
+              isActive={activeSpecialist === 'Health Checkups'}
+              onPress={() => setActiveSpecialist('Health Checkups')}
               index={0}
             />
             <SpecialistButton
-              name="Nephrologists"
-              image={require('../../assets/home/Nephrologist.png')}
+              name="Wellness & Recovery"
+              image={require('../../assets/icon/wellness.png')}
               activeCount={320}
-              isActive={activeSpecialist === 'Nephrologists'}
-              onPress={() => setActiveSpecialist('Nephrologists')}
+              isActive={activeSpecialist === 'Wellness & Recovery'}
+              onPress={() => setActiveSpecialist('Wellness & Recovery')}
               index={1}
-            />
-            <SpecialistButton
-              name="Hepatologists"
-              image={require('../../assets/home/Hepatologists.png')}
-              activeCount={320}
-              isActive={activeSpecialist === 'Hepatologists'}
-              onPress={() => setActiveSpecialist('Hepatologists')}
-              index={1}
-            />
-            <SpecialistButton
-              name="Gastroenterology"
-              image={require('../../assets/home/Gastroenterology.png')}
-              activeCount={320}
-              isActive={activeSpecialist === 'Gastroenterology'}
-              onPress={() => setActiveSpecialist('Gastroenterology')}
-              index={3}
-            />
-            <SpecialistButton
-              name="Endocrinologists"
-              image={require('../../assets/home/Endocrinologists.png')}
-              activeCount={320}
-              isActive={activeSpecialist === 'Endocrinologists'}
-              onPress={() => setActiveSpecialist('Endocrinologists')}
-              index={4}
-            />
-            <SpecialistButton
-              name="Orthopedics"
-              image={require('../../assets/home/Orthopedics.png')}
-              activeCount={320}
-              isActive={activeSpecialist === 'Orthopedics'}
-              onPress={() => setActiveSpecialist('Orthopedics')}
-              index={5}
             />
           </ScrollView>
+        </View>
+         <View style={styles.specialistSection}>
+          <View style={styles.sectionTitleContainer}>
+            <Text style={styles.sectionTitle}>Health Coverage</Text>
+          </View>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.specialistGrid}
+          >
+            <SpecialistButton
+              name="My Insurance"
+              image={require('../../assets/icon/coverage.png')}
+              activeCount={230}
+              isActive={activeSpecialist === 'My Insurance'}
+              onPress={() => setActiveSpecialist('My Insurances')}
+              index={0}
+            />
+          </ScrollView>
+        </View>
+        <View style={styles.specialistSection}>
+          <View style={styles.sectionTitleContainer}>
+            <Text style={styles.sectionTitle}>Health & Wellness</Text>
+          </View>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.specialistGrid}
+          >
+            <SpecialistButton
+              name="My Medicine"
+              image={require('../../assets/icon/medicne.png')}
+              activeCount={230}
+              isActive={activeSpecialist === 'My Medicine'}
+              onPress={() => setActiveSpecialist('My Medicine')}
+              index={0}
+            />
+            <SpecialistButton
+              name="Allergic List"
+              image={require('../../assets/icon/list.png')}
+              activeCount={320}
+              isActive={activeSpecialist === 'Allergic List'}
+              onPress={() => setActiveSpecialist('Allergic List')}
+              index={1}
+            />
+              <SpecialistButton
+              name="Vitals Status"
+              image={require('../../assets/icon/status.png')}
+              activeCount={320}
+              isActive={activeSpecialist === 'Vitals Status'}
+              onPress={() => setActiveSpecialist('Vitals Status')}
+              index={1}
+            />
+          </ScrollView>
+        </View>
+        <View style={styles.specialImagea}>
+            <View style={styles.specialImage}>
+            <Text style={styles.sectionTitle}>Pick Services for You</Text>
+            <Image
+            source={require('../../assets/icon/ri_voice-ai-fill.png')}
+            style={{ width: 24, height: 24 }} 
+            />
+        </View>     
+        </View>
+
+        {/* Image Slider Section */}
+        <View style={styles.sliderContainer}>
+          <Swiper
+            style={styles.wrapper}
+            showsButtons={false}
+            loop
+            autoplay
+            autoplayTimeout={5}
+            dot={<View style={styles.dot} />}
+            activeDot={<View style={styles.activeDot} />}
+            paginationStyle={styles.pagination}
+            onIndexChanged={index => setCurrentPage(index)}
+          >
+            <View style={styles.slide}>
+              <Image
+                source={require('../../assets/icon/pick1.png')}
+                style={styles.slideImage}
+              />
+            </View>
+            <View style={styles.slide}>
+              <Image
+                source={require('../../assets/icon/pick2.png')}
+                style={styles.slideImage}
+              />
+            </View>
+            <View style={styles.slide}>
+              <Image
+                source={require('../../assets/icon/pick3.png')}
+                style={styles.slideImage}
+              />
+            </View>
+          </Swiper>
         </View>
       </ScrollView>
 
       {/* Bottom Menu Bar */}
       <View style={styles.bottomMenu}>
-        <TouchableOpacity style={styles.menuItem}>
+        <TouchableOpacity style={styles.menuItem} onPress={goHome}>
           <Image
             source={require('../../assets/home/Icon.png')}
             style={{ width: 24, height: 24 }} 
           />
           <Text style={[styles.menuText, styles.menuTextActive]}>Home</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem} onPress={goValiant}>
+        <TouchableOpacity style={styles.menuItem}>
           <Image
             source={require('../../assets/logo/logo.png')}
             style={{ width: 24, height: 24 }}
@@ -454,14 +437,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#72777A',
     fontStyle: 'normal',
-    fontWeight: 400,
+    fontWeight: '400',
     lineHeight: 22.4,
     fontFamily: 'Satoshi',
   },
   specialistSection: {
     paddingHorizontal: 16,
     backgroundColor: '#fff',
-    marginBottom: 1,
+    marginBottom: 30,
   },
   sectionTitleContainer: {
     width: '100%',
@@ -476,7 +459,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Satoshi',
     fontStyle: 'normal',
-    fontWeight: 700,
+    fontWeight: '700',
     lineHeight: 22.4,
     color: '#3D3D3D',
   },
@@ -493,39 +476,32 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   specialistItem: {
-    width: 180,
+    width: 168,
     marginRight: 8,
   },
   imageContainer: {
     position: 'relative',
-    height: 85, 
+    height: 45, 
     alignItems: 'center',
   },
   specialistImage: {
-    width: 120,
-    height: 120,
+    width: 100,
+    height: 100,
     position: 'absolute',
-    top: 40,
+    top: 25,
     zIndex: 2,
   },
   specialistCard: {
-    backgroundColor: '#E7E7E7',
-    width: '100%',
-    height: 222,
+    backgroundColor: 'rgba(193, 225, 204, 0.32)',
+    width: 168,
+    height: 120,
     borderRadius: 24,
-    padding: 16,
+    padding: 10,
     paddingTop: 80, 
     alignItems: 'center',
-    shadowColor: '#E7E7E7',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-    backgroundImage: 'linear-gradient(to bottom, #F0F5F0 0%, #E0E5E0 50%, #D0D5D0 100%)',
   },
   specialistCardInactive: {},
   specialistCardActive: {
-    height: 240,
     backgroundColor: '#D4E5D9',
     backgroundImage: 'linear-gradient(to bottom, #D4E9D4 0%, #C4D9C4 50%, #B4C9B4 100%)',
   },
@@ -550,14 +526,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   specialistName: {
-    fontSize: 16.515,
+    fontSize: 14,
     fontFamily: 'Satoshi',
-    fontWeight: '700',
+    fontWeight: '400',
     color: '#3D3D3D',
-    lineHeight: 16.515,
+    lineHeight: 16.8,
     textAlign: 'center',
     fontStyle: 'normal',
-    marginBottom: 9.44,
   },
   specialistCount: {
     fontSize: 16.515,
@@ -594,7 +569,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 8,
-    height:100,
+    height: 100,
     left: 0,
     right: 0,
   },
@@ -604,7 +579,7 @@ const styles = StyleSheet.create({
   menuText: {
     fontSize: 12,
     fontFamily: 'Inter',
-    fontStyle:'normal',
+    fontStyle: 'normal',
     fontWeight: '400',
     color: '#72777A',
     marginTop: 4,
@@ -631,11 +606,12 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   welcomeText: {
-    fontSize: 20,
+    fontSize: 24,
     fontFamily: 'Satoshi',
-    color: '#3D3D3A',
+    color: '#131214',
     marginBottom: 8,
     fontWeight: '700',
+    lineHeight: 28.8,
   },
   appointmentInfo: {
     flexDirection: 'row',
@@ -653,9 +629,9 @@ const styles = StyleSheet.create({
   },
   comingText: {
     color: '#3D3D3A',
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '400',
-    lineHeight: 21,
+    lineHeight: 22.4,
     fontFamily: 'Satoshi',
     fontStyle: 'normal',
   },
@@ -665,8 +641,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 8,
     height: 8,
+    backgroundColor: '#fff',
     alignItems: 'center',
     marginLeft: 50,
+    marginBottom: 20,
     marginTop: 8,
   },
   dot: {
@@ -684,5 +662,76 @@ const styles = StyleSheet.create({
     borderRadius: 32,
     width: 32,
     height: 32,
+  },
+  specialImagea: {
+    paddingHorizontal: 16,
+    backgroundColor: '#fff',
+    marginBottom: 30,
+  },
+   specialImage: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignSelf: 'stretch',
+    gap: 12,
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  sliderContainer: {
+    backgroundColor:"#fff",
+    flex:1,
+    height: 410,
+    width: '100%',
+    overflow: 'hidden',
+    marginBottom: 10,
+  },
+  wrapper: {},
+  slide: {
+    left: '50%',
+    position: 'absolute',
+    marginLeft: -151.7,
+    top:23,
+    width: 303,
+    height:357
+  },
+  slideImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 16,
+    position: 'absolute',
+  },
+  textOverlay: {
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    right: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    borderRadius: 8,
+    padding: 10,
+    alignItems: 'center',
+  },
+  slideTitle: {
+    fontSize: 16,
+    fontFamily: 'Satoshi',
+    fontWeight: '700',
+    color: '#131214',
+    marginBottom: 4,
+  },
+  slideDescription: {
+    fontSize: 14,
+    fontFamily: 'Satoshi',
+    fontWeight: '400',
+    color: '#3D3D3D',
+    textAlign: 'center',
+  },
+  pagination: {
+    bottom: 10,
+  },
+  
+  activeDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#9BB9A3',
+    marginHorizontal: 4,
   },
 });
