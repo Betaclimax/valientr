@@ -6,9 +6,15 @@ export default function SignupScreen() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   const handleContinue = () => {
+    if (password !== confirmPassword) {
+      console.log('Passwords do not match');
+      return;
+    }
     console.log('Continue pressed', { email, password });
   };
 
@@ -16,27 +22,13 @@ export default function SignupScreen() {
     console.log('Forgot Password pressed');
   };
 
-  const handleSignUp = () => {
-    console.log('Sign Up pressed');
-    // router.push('/signup'); 
-  };
-
-  const handleGoogleLogin = () => {
-    console.log('Continue with Google pressed');
-
-  };
-
-  const handleAppleLogin = () => {
-    console.log('Continue with Apple pressed');
-  };
-
   return (
     <ScrollView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-      <View style={styles.backButton} >
+      <View style={styles.backButton}>
         <TouchableOpacity onPress={() => router.back()}>
           <Image
-            source={require('../../assets/icon/Left Icon.png')} 
+            source={require('../../assets/icon/Left Icon.png')}
             style={styles.LeftIcon}
           />
         </TouchableOpacity>
@@ -49,10 +41,8 @@ export default function SignupScreen() {
         <Text style={styles.label}>First Name</Text>
         <TextInput
           style={styles.input}
-          placeholderTextColor="#3D3D3D"
-        //   value={email}
-        //   onChangeText={setEmail}
-        //   keyboardType="email-address"
+          placeholderTextColor="#E4E4E4"
+          placeholder="Your First Name"
           autoCapitalize="none"
         />
       </View>
@@ -60,10 +50,8 @@ export default function SignupScreen() {
         <Text style={styles.label}>Last Name</Text>
         <TextInput
           style={styles.input}
-          placeholderTextColor="#3D3D3D"
-        //   value={email}
-        //   onChangeText={setEmail}
-        //   keyboardType="email-address"
+          placeholderTextColor="#E4E4E4"
+          placeholder="Your Last Name"
           autoCapitalize="none"
         />
       </View>
@@ -71,10 +59,46 @@ export default function SignupScreen() {
         <Text style={styles.label}>Email Address</Text>
         <TextInput
           style={styles.input}
-          placeholderTextColor="#3D3D3D"
+          placeholderTextColor="#E4E4E4"
+          placeholder="youremail@domain.com"
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
+          autoCapitalize="none"
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Phone Number</Text>
+        <TextInput
+          style={styles.input}
+          placeholderTextColor="#3D3D3D"
+          placeholder="+_ _ _- _ _ _ _ _ _ _ _ _ _ _"
+          autoCapitalize="none"
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Date of Birth</Text>
+        <View style={styles.dateContainer}>
+          <TextInput
+            style={[styles.input, { flex: 1 }]}
+            placeholderTextColor="#E4E4E4"
+            placeholder="5 May 1990"
+            autoCapitalize="none"
+          />
+          <TouchableOpacity style={styles.eyeIcon}>
+            <Image
+              source={require('../../assets/icon/Calendar.png')}
+              style={styles.calendarIcon}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Gender</Text>
+        <TextInput
+          style={styles.input}
+          placeholderTextColor="#E4E4E4"
+          placeholder="Your Gender"
           autoCapitalize="none"
         />
       </View>
@@ -102,34 +126,42 @@ export default function SignupScreen() {
             />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={handleForgotPassword}>
-          <Text style={styles.forgotPassword}>Forgot your password?</Text>
-        </TouchableOpacity>
       </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Confirm Password</Text>
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={[styles.input, { flex: 1 }]}
+            placeholderTextColor="#A0A0A0"
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            secureTextEntry={!confirmPasswordVisible}
+            autoCapitalize="none"
+          />
+          <TouchableOpacity
+            onPress={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
+            style={styles.eyeIcon}
+          >
+            <Image
+              source={confirmPasswordVisible
+                ? require('../../assets/icon/Eye on.png')
+                : require('../../assets/icon/Eye off.png')
+              }
+              style={styles.eyeIconImage}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <Text style={styles.termsText}>
+        <Text style={styles.regularText}>By creating an account, you agree to our </Text>
+        <Text style={styles.linkText}>Terms of Services</Text>
+        <Text style={styles.regularText}> and have read and understood </Text>
+        <Text style={styles.linkText}>Privacy Policy</Text>
+      </Text>
       <TouchableOpacity style={styles.continueButton} onPress={handleContinue}>
         <Text style={styles.continueButtonText}>Continue</Text>
       </TouchableOpacity>
-      <View style={styles.signUpContainer}>
-        <Text style={styles.signUpText}>Need to create new account? </Text>
-        <TouchableOpacity onPress={handleSignUp}>
-          <Text style={styles.signUpLink}>Sing Up</Text>
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.orText}>or log in with</Text>
-      <TouchableOpacity style={styles.socialButton} onPress={handleGoogleLogin}>
-        <Image
-          source={require('../../assets/icon/google-icon.png')} 
-          style={styles.socialIcon}
-        />
-        <Text style={styles.socialButtonText}>Continue with Google</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.socialButton} onPress={handleAppleLogin}>
-        <Image
-          source={require('../../assets/icon/apple-icon.png')} 
-          style={styles.socialIcon}
-        />
-        <Text style={styles.socialButtonText}>Continue with Apple</Text>
-      </TouchableOpacity>
+      <View style={styles.bottomSpacer} />
     </ScrollView>
   );
 }
@@ -149,7 +181,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexShrink: 0,
     color: '#3D3D3D',
-    marginBottom: 16
+    marginBottom: 16,
   },
   header: {
     fontSize: 32,
@@ -167,7 +199,6 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     marginBottom: 16,
     lineHeight: 21,
-
   },
   inputContainer: {
     marginBottom: 20,
@@ -200,6 +231,14 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     height: 50,
   },
+  dateContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: '#E4E4E4',
+    borderWidth: 1,
+    borderRadius: 8,
+    height: 50,
+  },
   eyeIcon: {
     padding: 8,
   },
@@ -207,15 +246,9 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
   },
-  forgotPassword: {
-    fontSize: 14,
-    fontFamily: 'Satoshi',
-    color: '#95A78D',
-    textAlign: 'left',
-    marginTop: 8,
-    fontWeight: '400',
-    lineHeight: 21,
-    marginBottom:35,
+  calendarIcon: {
+    width: 20,
+    height: 20,
   },
   continueButton: {
     display: 'flex',
@@ -227,7 +260,8 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     gap: 10,
     alignItems: 'center',
-    marginBottom: 12,
+    marginTop: 26,
+    marginBottom: 90,
   },
   continueButtonText: {
     fontSize: 16,
@@ -237,74 +271,37 @@ const styles = StyleSheet.create({
     lineHeight: 22.4,
     fontStyle: 'normal',
   },
-  signUpContainer: {
-    display:'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 8,
-    marginBottom: 30,
+  termsText: {
+    width:"100%",
+    fontSize: 12,
+    fontFamily: 'Satoshi',
+    textAlign: 'center',
+    lineHeight: 17,
+    marginTop: 20,
+  },
+  regularText: {
     color: '#3D3D3D',
+    fontFamily: 'Satoshi',
+    fontWeight: '400',
+    fontSize:14,
+    fontStyle: 'normal',
+    lineHeight: 16.8,
   },
-  signUpText: {
-    fontSize: 14,
-    fontFamily: 'satoshi',
-    color: '#666',
-  },
-  signUpLink: {
-    fontSize: 16,
+  linkText: {
+    color: '#9BC7A7',
     fontFamily: 'Satoshi',
     fontWeight: '700',
-    lineHeight: 22.4,
-    color: '#3D3D3D',
-    fontStyle: 'normal',
+    fontSize:14,
     textDecorationLine: 'underline',
-    textDecorationStyle: 'solid',
-    textDecorationColor: '#3D3D3D',
-    marginBottom: 10,
-  },
-  orText: {
-    fontSize: 16,
-    fontFamily: 'Satoshi',
-    color: '#3D3D3D',
-    textAlign: 'center',
+    lineHeight: 16.8,
     fontStyle: 'normal',
-    fontWeight: '400',
-    lineHeight: 22.4,
-    marginBottom: 20,
-  },
-  socialButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderColor: '#000',
-    borderWidth: 1,
-    borderRadius: 48,
-    paddingVertical: 15,
-    marginBottom: 105,
   },
   LeftIcon: {
     width: 32,
     height: 32,
-    // position: 'absolute',
-    top: 16
+    top: 16,
   },
-  socialIcon: {
-    width: 24,
-    height: 24,
-    marginRight: 8,
-    flexShrink: 0
+  bottomSpacer: {
+    height: 40,
   },
-  socialButtonText: {
-    fontSize: 16,
-    fontFamily: 'Satoshi',
-    color: '#3D3D3D',
-    fontWeight: '700',
-    lineHeight: 22.4,
-  },
-  frameChild: {
-    maxWidth: "100%",
-    overflow: "hidden",
-    maxHeight: "100%",
-    flex: 1
-},
 });

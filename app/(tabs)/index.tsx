@@ -36,6 +36,7 @@ export default function App() {
 
   const handleGetStarted = () => {
     console.log('Get Started pressed');
+    router.push('/signup/signup');
   };
 
   const handleLogIn = () => {
