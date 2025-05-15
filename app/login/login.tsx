@@ -10,6 +10,7 @@ export default function LoginScreen() {
 
   const handleContinue = () => {
     console.log('Continue pressed', { email, password });
+    router.push('../Home/home');
   };
 
   const handleForgotPassword = () => {
@@ -23,7 +24,7 @@ export default function LoginScreen() {
 
   const handleGoogleLogin = () => {
     console.log('Continue with Google pressed');
-
+    
   };
 
   const handleAppleLogin = () => {
