@@ -16,8 +16,6 @@ export default function valiant() {
   const { width } = useWindowDimensions();
   const [activeSpecialist, setActiveSpecialist] = useState('Cardiologist');
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
   const drawerAnimation = useRef(new Animated.Value(0)).current;
   const router = useRouter();
   const params = useGlobalSearchParams();
@@ -43,11 +41,6 @@ export default function valiant() {
     );
     Animated.stagger(200, animations).start();
   }, []);
-
-  const getFirstLetter = (text: string) => {
-    if (!text) return '';
-    return text.charAt(0).toUpperCase();
-  };
 
   const getDrawerWidth = () => {
     if (width < 375) return width * 0.75;
@@ -114,10 +107,6 @@ export default function valiant() {
     );
   };
 
-  const handleTryNow = () => {
-    console.log('Try Now pressed');
-  };
-
   return (
     <View style={styles.container}>
       {isDrawerOpen && (
@@ -151,7 +140,7 @@ export default function valiant() {
               image={require('../../assets/icon/check.png')}
               activeCount={230}
               isActive={activeSpecialist === 'Health Checkups'}
-              onPress={() => setActiveSpecialist('Health Checkups')}
+              onPress={() => router.push('/healthcheck/checkuppage')}
               index={0}
             />
             <SpecialistButton
@@ -164,7 +153,7 @@ export default function valiant() {
             />
           </ScrollView>
         </View>
-         <View style={styles.specialistSection}>
+        <View style={styles.specialistSection}>
           <View style={styles.sectionTitleContainer}>
             <Text style={styles.sectionTitle}>Health Coverage</Text>
           </View>
@@ -208,7 +197,7 @@ export default function valiant() {
               onPress={() => setActiveSpecialist('Allergic List')}
               index={1}
             />
-              <SpecialistButton
+            <SpecialistButton
               name="Vitals Status"
               image={require('../../assets/icon/status.png')}
               activeCount={320}
@@ -219,13 +208,13 @@ export default function valiant() {
           </ScrollView>
         </View>
         <View style={styles.specialImagea}>
-            <View style={styles.specialImage}>
+          <View style={styles.specialImage}>
             <Text style={styles.sectionTitle}>Pick Services for You</Text>
             <Image
-            source={require('../../assets/icon/ri_voice-ai-fill.png')}
-            style={{ width: 24, height: 24 }} 
+              source={require('../../assets/icon/ri_voice-ai-fill.png')}
+              style={{ width: 24, height: 24 }} 
             />
-        </View>     
+          </View>     
         </View>
 
         {/* Image Slider Section */}
@@ -313,6 +302,9 @@ const styles = StyleSheet.create({
   mainContent: {
     flex: 1,
   },
+  scrollContent: {
+    paddingBottom: 100,
+  },
   welcomeSection: {
     padding: 20,
   },
@@ -323,123 +315,31 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginTop: 30,
   },
-  userIcon: {
-    display: 'flex',
-    padding: 15.37,
-    width: 54.7,
-    height: 55.7,
-    borderRadius: 30.74,
-    backgroundColor: '#9BB9A3',
-    justifyContent: 'center',
-    alignItems: 'center',
+  welcomeContent: {
+    position: 'relative',
+    zIndex: 1,
     marginTop: 50,
   },
-  userInitial: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  welcomeBanner: {
-    height: 396,
-    flex: 1,
-    borderRadius: 24,
-    overflow: 'hidden',
-    marginBottom: 10,
-    backgroundColor: '#5B675E',
-  },
-  bannerContent: {
-    display: 'flex',
-    justifyContent: 'center',
-    width: 220,
-    paddingRight: 16,
-    paddingTop: 16,
-    paddingBottom: 16,
-    paddingLeft: 24,
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    gap: 12,
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 24,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 24,
-    backgroundColor: 'rgba(255, 255, 255, 0.57)',
-    boxShadow: '0px -1px 2px 0px rgba(255,255,255,0.15) inset, 1px 1px 2px 0px rgba(255, 255, 255, 0.65) inset',
-    backdropFilter: 'blur(15px)',
-    marginTop: 198,
-  },
-  bannerTitle: {
+  welcomeText: {
+    fontSize: 24,
     fontFamily: 'Satoshi',
-    fontSize: 16,
-    fontStyle: 'normal',
-    color: '#fff',
-    fontWeight: '700',
-    lineHeight: 19.2,
+    color: '#131214',
     marginBottom: 8,
+    fontWeight: '700',
+    lineHeight: 28.8,
   },
-  bannerDescription: {
-    fontFamily: 'Satoshi',
-    fontStyle: 'normal',
-    fontWeight: '400',
-    lineHeight: 16.8,
-    fontSize: 14,
-    color: '#fff',
+  appointmentInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 12,
   },
-  tryNowButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#3D3D3D',
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    borderRadius: 16,
-    gap: 8,
-  },
-  tryNowText: {
-    fontFamily: 'Satoshi',
-    fontStyle: 'normal',
-    fontWeight: '400',
-    lineHeight: 14,
-    color: '#fff',
-    fontSize: 14,
-  },
-  arrowIcon: {
-    width: 16,
-    height: 16,
-  },
-  searchContainer: {
-    display: 'flex',
-    paddingTop: 8,
-    paddingLeft: 24,
-    paddingBottom: 8,
-    paddingRight: 24,
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%',
-    marginBottom: 10,
-  },
-  searchInputWrapper: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    padding: 12,
-    borderRadius: 24,
-    borderWidth: 1,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 2,
-  },
-  searchInput: {
-    flex: 1,
-    marginLeft: 8,
+  comingText: {
+    color: '#3D3D3A',
     fontSize: 16,
-    color: '#72777A',
-    fontStyle: 'normal',
     fontWeight: '400',
     lineHeight: 22.4,
     fontFamily: 'Satoshi',
+    fontStyle: 'normal',
   },
   specialistSection: {
     paddingHorizontal: 16,
@@ -462,13 +362,6 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     lineHeight: 22.4,
     color: '#3D3D3D',
-  },
-  viewAll: {
-    fontFamily: 'Satoshi',
-    fontStyle: 'normal',
-    fontSize: 14,
-    color: '#72777A',
-    lineHeight: 14,
   },
   specialistGrid: {
     flexDirection: 'row',
@@ -511,20 +404,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  cardSeparator: {
-    height: 0.5,
-    width: '100%',
-    backgroundColor: '#fff',
-    marginVertical: 3,
-    marginTop: 30,
-  },
-  cardBottom: {
-    flex: 2,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    paddingBottom: 1,
-    flexDirection: 'row',
-  },
   specialistName: {
     fontSize: 14,
     fontFamily: 'Satoshi',
@@ -533,30 +412,6 @@ const styles = StyleSheet.create({
     lineHeight: 16.8,
     textAlign: 'center',
     fontStyle: 'normal',
-  },
-  specialistCount: {
-    fontSize: 16.515,
-    fontFamily: 'Satoshi',
-    fontWeight: '400',
-    color: '#72777A',
-    marginBottom: 4,
-    lineHeight: 16.515,
-    textAlign: 'center',
-  },
-  activeConsult: {
-    fontSize: 14.156,
-    fontStyle: 'normal',
-    lineHeight: 14.156,
-    fontFamily: 'Satoshi',
-    fontWeight: '400',
-    color: '#3D3D3D',
-    marginRight: 4,
-  },
-  activeConsultNumber: {
-    fontSize: 12,
-    fontFamily: 'Satoshi',
-    fontWeight: '700',
-    color: '#333',
   },
   bottomMenu: {
     flexDirection: 'row',
@@ -588,9 +443,6 @@ const styles = StyleSheet.create({
     color: '#9BB9A3',
     fontWeight: '500',
   },
-  scrollContent: {
-    paddingBottom: 100,
-  },
   drawerOverlay: {
     position: 'absolute',
     top: 0,
@@ -600,75 +452,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)',
     zIndex: 999,
   },
-  welcomeContent: {
-    position: 'relative',
-    zIndex: 1,
-    marginTop: 50,
-  },
-  welcomeText: {
-    fontSize: 24,
-    fontFamily: 'Satoshi',
-    color: '#131214',
-    marginBottom: 8,
-    fontWeight: '700',
-    lineHeight: 28.8,
-  },
-  appointmentInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  appointmentText: {
-    color: '#9BB9A3',
-    fontSize: 14,
-    fontFamily: 'Satoshi',
-    fontWeight: '700',
-    fontStyle: 'normal',
-    marginRight: 8,
-    lineHeight: 21,
-  },
-  comingText: {
-    color: '#3D3D3A',
-    fontSize: 16,
-    fontWeight: '400',
-    lineHeight: 22.4,
-    fontFamily: 'Satoshi',
-    fontStyle: 'normal',
-  },
-  dots: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: 8,
-    height: 8,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    marginLeft: 50,
-    marginBottom: 20,
-    marginTop: 8,
-  },
-  dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: '#9BB9A3',
-    marginHorizontal: 4,
-  },
-  searchIcon: {
-    display: 'flex',
-    padding: 8,
-    alignItems: 'center',
-    gap: 10,
-    borderRadius: 32,
-    width: 32,
-    height: 32,
-  },
   specialImagea: {
     paddingHorizontal: 16,
     backgroundColor: '#fff',
     marginBottom: 30,
   },
-   specialImage: {
+  specialImage: {
     display: 'flex',
     flexDirection: 'row',
     alignSelf: 'stretch',
@@ -677,8 +466,8 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   sliderContainer: {
-    backgroundColor:"#fff",
-    flex:1,
+    backgroundColor: '#fff',
+    flex: 1,
     height: 410,
     width: '100%',
     overflow: 'hidden',
@@ -689,9 +478,9 @@ const styles = StyleSheet.create({
     left: '50%',
     position: 'absolute',
     marginLeft: -151.7,
-    top:23,
+    top: 23,
     width: 303,
-    height:357
+    height: 357,
   },
   slideImage: {
     width: '100%',
@@ -699,34 +488,16 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     position: 'absolute',
   },
-  textOverlay: {
-    position: 'absolute',
-    bottom: 20,
-    left: 20,
-    right: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    borderRadius: 8,
-    padding: 10,
-    alignItems: 'center',
-  },
-  slideTitle: {
-    fontSize: 16,
-    fontFamily: 'Satoshi',
-    fontWeight: '700',
-    color: '#131214',
-    marginBottom: 4,
-  },
-  slideDescription: {
-    fontSize: 14,
-    fontFamily: 'Satoshi',
-    fontWeight: '400',
-    color: '#3D3D3D',
-    textAlign: 'center',
-  },
   pagination: {
     bottom: 10,
   },
-  
+  dot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#9BB9A3',
+    marginHorizontal: 4,
+  },
   activeDot: {
     width: 8,
     height: 8,
