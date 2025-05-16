@@ -24,6 +24,12 @@ export default function valiant() {
   const goHome = () => {
     router.push('../Home/home');
   };
+  const goBooking = () => {
+    router.push('../Booking/booking');
+  };
+   const goInbox = () => {
+    router.push('../Inbox/inbox');
+  }
 
   const cardAnimations = useRef(
     Array(6).fill(null).map(() => new Animated.Value(0))
@@ -268,14 +274,14 @@ export default function valiant() {
           />
           <Text style={styles.menuText}>MyValiant</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem}>
+        <TouchableOpacity style={styles.menuItem} onPress={goBooking}>
           <Image
             source={require('../../assets/icon/booking.png')}
             style={{ width: 24, height: 24 }}
           />
           <Text style={styles.menuText}>Booking</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem}>
+        <TouchableOpacity style={styles.menuItem} onPress={goInbox}>
           <Image
             source={require('../../assets/icon/bell.png')}
             style={{ width: 24, height: 24 }}
@@ -495,7 +501,7 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#9BB9A3',
+    backgroundColor: '#C3CFC6',
     marginHorizontal: 4,
   },
   activeDot: {

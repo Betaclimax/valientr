@@ -25,9 +25,15 @@ export default function Home() {
   const goprofile = () => {
     router.push('../Profile/profile');
   }
-   const goValiant = () => {
+  const goValiant = () => {
     router.push('../Valiant/valiant')
    }
+  const goBooking = () => {
+    router.push('../Booking/booking');
+  } 
+  const goInbox = () => {
+    router.push('../Inbox/inbox');
+  }
 
   const cardAnimations = useRef(
     Array(6).fill(null).map(() => new Animated.Value(0))
@@ -296,14 +302,14 @@ export default function Home() {
           />
           <Text style={styles.menuText}>MyValiant</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem}>
+        <TouchableOpacity style={styles.menuItem} onPress={goBooking}>
           <Image
             source={require('../../assets/icon/booking.png')}
             style={{ width: 24, height: 24 }}
           />
           <Text style={styles.menuText}>Booking</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem}>
+        <TouchableOpacity style={styles.menuItem} onPress={goInbox}>
           <Image
             source={require('../../assets/icon/bell.png')}
             style={{ width: 24, height: 24 }}
