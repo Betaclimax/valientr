@@ -1,3 +1,4 @@
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { Image, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -9,6 +10,8 @@ export default function SignupScreen() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const [dateOfBirth, setDateOfBirth] = useState<Date | null>(null);
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const handleContinue = () => {
     if (password !== confirmPassword) {
@@ -20,6 +23,22 @@ export default function SignupScreen() {
 
   const handleForgotPassword = () => {
     console.log('Forgot Password pressed');
+  };
+
+  const handleDateChange = (_event: unknown, selectedDate?: Date | undefined) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      setDateOfBirth(selectedDate);
+    }
+  };
+
+  const formatDate = (date: Date | null) => {
+    if (!date) return '';
+    return date.toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
   };
 
   return (
@@ -83,15 +102,29 @@ export default function SignupScreen() {
             style={[styles.input, { flex: 1 }]}
             placeholderTextColor="#E4E4E4"
             placeholder="5 May 1990"
+            value={formatDate(dateOfBirth)}
+            editable={false}
             autoCapitalize="none"
           />
-          <TouchableOpacity style={styles.eyeIcon}>
+          <TouchableOpacity
+            style={styles.eyeIcon}
+            onPress={() => setShowDatePicker(true)}
+          >
             <Image
               source={require('../../assets/icon/Calendar.png')}
               style={styles.calendarIcon}
             />
           </TouchableOpacity>
         </View>
+        {showDatePicker && (
+          <DateTimePicker
+            value={dateOfBirth || new Date()}
+            mode="date"
+            display="default"
+            onChange={handleDateChange}
+            maximumDate={new Date()}
+          />
+        )}
       </View>
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Gender</Text>
@@ -221,7 +254,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontFamily: 'Satoshi',
     lineHeight: 22.4,
-    color: '#3D3D3D',
+    color: '#33D3D',
   },
   passwordContainer: {
     flexDirection: 'row',

@@ -1,7 +1,6 @@
 import { useGlobalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Image, ImageBackground, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from 'react-native';
-
 interface SpecialistButtonProps {
   name: string;
   image: any;
@@ -34,6 +33,9 @@ export default function Home() {
   const goInbox = () => {
     router.push('../Inbox/inbox');
   }
+  const goSpecialists = () => {
+    router.push('../Viewall/viewall')
+  }
 
   const cardAnimations = useRef(
     Array(6).fill(null).map(() => new Animated.Value(0))
@@ -46,11 +48,11 @@ export default function Home() {
     },
     {
       title: 'Medical Check up2',
-      description: 'personalized',
+      description: 'Understand your body better by checking personal health',
     },
     {
       title: 'Medical Check up3',
-      description: 'delivering personalized support for a better you',
+      description: 'Understand your body better by checking personal health',
     },
   ];
 
@@ -175,7 +177,7 @@ export default function Home() {
             </View>
             <TouchableOpacity onPress={goprofile}>
                 <View style={styles.userIcon}>
-                <Text style={styles.userInitial}>{getFirstLetter(firstName)}{getFirstLetter(lastName)}</Text>
+                <Text style={styles.userInitial}>AJ</Text>
             </View>
             </TouchableOpacity>           
           </View>
@@ -184,16 +186,18 @@ export default function Home() {
             style={styles.welcomeBanner}
             imageStyle={{ borderRadius: 24 }}
           >
-            <View style={styles.bannerContent}>
-              <Text style={styles.bannerTitle}>{currentPageData.title}</Text>
-              <Text style={styles.bannerDescription}>{currentPageData.description}</Text>
-              <TouchableOpacity style={styles.tryNowButton} onPress={handleTryNow}>
+            <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+              <View  style={styles.bannerContent}>
+                <Text style={styles.bannerTitle}>{currentPageData.title}</Text>
+                <Text style={styles.bannerDescription}>{currentPageData.description}</Text>
+                <TouchableOpacity style={styles.tryNowButton} onPress={handleTryNow}>
                 <Text style={styles.tryNowText}>Try Now</Text>
                 <Image
                   source={require('../../assets/icon/Icon.png')}
                   style={styles.arrowIcon}
                 />
-              </TouchableOpacity>
+                </TouchableOpacity>
+              </View>
             </View>
             <View style={styles.dots}>
               {pages.map((_, index) => (
@@ -211,8 +215,7 @@ export default function Home() {
           <View style={styles.searchInputWrapper}>
             <TextInput
               style={styles.searchInput}
-              placeholder="Search for doctors/specialists..."
-              placeholderTextColor="#666"
+              placeholder="Search doctors/specialists..."
             />
             <Image
               source={require('../../assets/icon/search.png')}
@@ -225,7 +228,7 @@ export default function Home() {
         <View style={styles.specialistSection}>
           <View style={styles.sectionTitleContainer}>
             <Text style={styles.sectionTitle}>Specialists Category</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={goSpecialists}>
               <Text style={styles.viewAll}>View All</Text>
             </TouchableOpacity>
           </View>
@@ -358,12 +361,14 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   userInitial: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '600',
+    fontFamily: 'Satoshi',
+    fontSize: 19.212,
+    fontStyle: 'normal',
+    fontWeight: 700,
+    lineHeight: 23.05,
+    color: '#3D3D3D'
   },
   welcomeBanner: {
-    height: 396,
     flex: 1,
     borderRadius: 24,
     overflow: 'hidden',
@@ -385,11 +390,12 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 24,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 24,
-    backgroundColor: 'rgba(255, 255, 255, 0.57)',
+    backgroundColor: 'rgba(255, 255, 255, 0.12)',
     boxShadow: '0px -1px 2px 0px rgba(255,255,255,0.15) inset, 1px 1px 2px 0px rgba(255, 255, 255, 0.65) inset',
     backdropFilter: 'blur(15px)',
-    marginTop: 198,
+    marginTop: 148,
   },
+  
   bannerTitle: {
     fontFamily: 'Satoshi',
     fontSize: 16,
@@ -431,28 +437,29 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     display: 'flex',
-    paddingTop: 8,
+    paddingTop: 24,
     paddingLeft: 24,
-    paddingBottom: 8,
+    paddingBottom: 24,
     paddingRight: 24,
     flexDirection: 'row',
     alignItems: 'center',
     width: '100%',
     marginBottom: 10,
+    borderRadius:24,
+    borderColor: '#3D3D3D'
   },
   searchInputWrapper: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
-    padding: 12,
-    borderRadius: 24,
+    paddingTop: 8,
+    paddingBottom: 8,
+    paddingLeft: 24,
+    paddingRight: 24,
+    borderRadius: 32,
     borderWidth: 1,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 2,
+    borderColor: '#3D3D3D',
   },
   searchInput: {
     flex: 1,
@@ -674,6 +681,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 50,
     marginTop: 8,
+    marginBottom:20
   },
   dot: {
     width: 8,
@@ -691,4 +699,5 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
   },
+  
 });

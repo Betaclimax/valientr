@@ -154,7 +154,7 @@ export default function valiant() {
               image={require('../../assets/icon/wellness.png')}
               activeCount={320}
               isActive={activeSpecialist === 'Wellness & Recovery'}
-              onPress={() => setActiveSpecialist('Wellness & Recovery')}
+              onPress={() => router.push('/wellness/wellness')}
               index={1}
             />
           </ScrollView>
@@ -173,7 +173,7 @@ export default function valiant() {
               image={require('../../assets/icon/coverage.png')}
               activeCount={230}
               isActive={activeSpecialist === 'My Insurance'}
-              onPress={() => setActiveSpecialist('My Insurances')}
+              onPress={() => router.push('/Insurance/insurance')}
               index={0}
             />
           </ScrollView>
@@ -208,7 +208,7 @@ export default function valiant() {
               image={require('../../assets/icon/status.png')}
               activeCount={320}
               isActive={activeSpecialist === 'Vitals Status'}
-              onPress={() => setActiveSpecialist('Vitals Status')}
+              onPress={() => router.push('/Vitals/vitals')}
               index={1}
             />
           </ScrollView>

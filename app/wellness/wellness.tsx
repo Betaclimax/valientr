@@ -2,23 +2,19 @@ import { useRouter } from 'expo-router';
 import React from 'react';
 import { Image, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-const ProfileScreen = () => {
+const wellness = () => {
   const router = useRouter();
-  const goeditprofile = () => {
-    router.push('/Profile/editprofile');
-  }
-  const goMyhealthRecord = () => {
-    router.push('/MyhealthRecord/healthRecord')
-  }
 
   return (
     <ScrollView style={styles.mainContent} contentContainerStyle={styles.scrollContent}>
       <View style={styles.container}>
         <ImageBackground
-          source={require('../../assets/logo/Valiant_logo_new-1-scaled.png')}
+          source={require('../../assets/images/wellness.png')}
           style={[styles.background, { marginTop: 0 }]} 
           imageStyle={{ resizeMode: 'cover' }}
         >
+      <View style={styles.overlay} />
+
           {/* Back Button and Header */}
           <View style={styles.header}>
             <TouchableOpacity onPress={() => router.back()}>
@@ -27,103 +23,58 @@ const ProfileScreen = () => {
                 style={styles.backIcon}
               />
             </TouchableOpacity>
-            <Text style={styles.headerText}>Profile</Text>
           </View>
+          <View style={styles.wellnesscontainer}>
+            <Text style={styles.wellness}>Wellness and Recovery</Text>
+          </View>
+          <View style={styles.wellnesscontainer}>
+            <Text style={styles.wellnessdes}>Supporting your body with rebalance energy and boost recovery</Text>
+          </View>
+        <Text style={styles.popular}>Popular Services</Text>
+         
           {/* Profile Section */}
           <View style={styles.profileContainer}>
-            <View style={styles.initialsCircle}>
-              <Text style={styles.initialsText}>AJ</Text>
-              <Image
-                source={require('../../assets/icon/camera.png')}
-                style={styles.cameraIcon}
-              />
-            </View>
-            <Text style={styles.name}>Amanda Jane</Text>
-            <Text style={styles.details}>Female | 20 years</Text>
-            <Text style={styles.details}>Blood O+ | 54 kg | 154 cm</Text>
-            <TouchableOpacity style={styles.editButton} onPress={goeditprofile}>
-              <Text style={styles.editText}>Edit Profile</Text>
-            </TouchableOpacity>
+            <Text style={styles.name}>Vitadrip®</Text>
+            <Text style={styles.details}>Boost immunity, energy, and recovery with targeted IV care.</Text>
           </View>
         </ImageBackground>
-        {/* Health Data Section */}
+        {/* Wellness and Recovery Services  Section */}
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionHeaderText}>Health Data</Text>
-        </View>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.specialistGrid}
-        >
-            <View style={styles.fulls}> 
-              <View style={styles.healthData}>
-                <View style={styles.toggleContainer}>
-                    <TouchableOpacity style={[styles.toggleOption]} onPress={goMyhealthRecord}>
-                      <Image style={styles.frameChild} resizeMode="cover"
-                        source={require('../../assets/icon/ava1.png')}
-                      />
-                      <Text style={[styles.toggleText]}>My Health Records</Text>
-                    </TouchableOpacity>
-                </View>
-              </View>
-              <View style={styles.healthData}>
-                <View style={styles.toggleContainer}>
-                    <TouchableOpacity style={[styles.toggleOption]}>
-                      <Image style={styles.frameChild} resizeMode="cover"
-                        source={require('../../assets/icon/ava2.png')}
-                      />
-                      <Text style={[styles.toggleText]}>Niki Health Records</Text>
-                    </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-        </ScrollView>
-        {/* Settings Section - Added from the image */}
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionHeaderText}>Settings</Text>
+          <Text style={styles.sectionHeaderText}>Wellness and Recovery Services </Text>
         </View>
         <View style={styles.settings}>
           <TouchableOpacity style={styles.settingOption}>
-            <Image style={styles.iconf} resizeMode="cover"
-              source={require('../../assets/icon/pay.png')}
-            />
-            <Text style={styles.optionText}>Payment method</Text>
+            <Text style={styles.optionText}>Vitadrip®</Text>
             <Image style={styles.Right} resizeMode="cover"
               source={require('../../assets/icon/Right Icon.png')}
             />
           </TouchableOpacity>
           <TouchableOpacity style={styles.settingOption}>
-            <Image style={styles.iconf} resizeMode="cover"
-              source={require('../../assets/icon/sec.png')}
-            />
-            <Text style={styles.optionText}>Password and Security</Text>
+            <Text style={styles.optionText}>NAD Therapy & Chelation</Text>
             <Image style={styles.Right} resizeMode="cover"
               source={require('../../assets/icon/Right Icon.png')}
             />
           </TouchableOpacity>
           <TouchableOpacity style={styles.settingOption}>
-            <Image style={styles.iconf} resizeMode="cover"
-              source={require('../../assets/icon/faq.png')}
-            />
-            <Text style={styles.optionText}>FAQs</Text>
+            <Text style={styles.optionText}>Intramuscular Therapy</Text>
             <Image style={styles.Right} resizeMode="cover"
               source={require('../../assets/icon/Right Icon.png')}
             />
           </TouchableOpacity>
           <TouchableOpacity style={styles.settingOption}>
-            <Image style={styles.iconf} resizeMode="cover"
-              source={require('../../assets/icon/legal.png')}
-            />
-            <Text style={styles.optionText}>Legal</Text>
+            <Text style={styles.optionText}>Stemcell Therapy</Text>
             <Image style={styles.Right} resizeMode="cover"
               source={require('../../assets/icon/Right Icon.png')}
             />
           </TouchableOpacity>
           <TouchableOpacity style={styles.settingOption}>
-            <Image style={styles.iconf} resizeMode="cover"
-              source={require('../../assets/icon/logout.png')}
+            <Text style={styles.optionText}>Peptide Therapy</Text>
+            <Image style={styles.Right} resizeMode="cover"
+              source={require('../../assets/icon/Right Icon.png')}
             />
-            <Text style={styles.optionText}>Log Out Account</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.settingOption}>
+            <Text style={styles.optionText}>Laboratory</Text>
             <Image style={styles.Right} resizeMode="cover"
               source={require('../../assets/icon/Right Icon.png')}
             />
@@ -147,7 +98,7 @@ const styles = StyleSheet.create({
   },
   background: {
     backgroundColor: '#C3CFC6',
-    height: 500,
+    height: 882,
     justifyContent: 'flex-start',
   },
   backgroundimage: {
@@ -225,19 +176,21 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     fontWeight: 700,
-    color: '#3D3D3D',
+    color: '#fff',
     fontStyle: 'normal',
     lineHeight: 28.8,
     fontFamily: 'Satoshi',
-    marginTop: 24
+    marginTop: 20,
+    alignSelf: 'flex-start'
   },
   details: {
     fontSize: 16,
-    color: '#72777A',
+    color: '#FFF',
     fontFamily: 'Satoshi',
     fontWeight: '400',
     marginBottom: 5,
-    textAlign: 'center',
+    lineHeight: 22.4,
+    marginTop: 20,
   },
   editButton: {
     display: 'flex',
@@ -261,13 +214,14 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   sectionHeaderText: {
-    marginTop: 32,
+    marginTop: 24,
     fontFamily: 'Satoshi',
     fontStyle: 'normal',
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: '700',
-    color: '#5B675E',
+    color: '#3D3D3D',
     marginBottom: 16,
+    lineHeight: 22.4
   },
   healthData: {
     paddingHorizontal: 15,
@@ -368,6 +322,46 @@ const styles = StyleSheet.create({
     padding: 6.51,
     alignItems: 'center',
   },
+  wellnesscontainer: {
+    alignItems: 'center'
+  },
+  wellness: {
+    fontFamily: 'Satoshi',
+    fontSize: 32,
+    fontStyle: 'normal',
+    fontWeight: 700,
+    lineHeight:38.4,
+    color: '#F7FAF8',
+    alignSelf: 'stretch',
+    textAlign: 'left',
+    marginLeft: "10%"
+  },
+  wellnessdes: {
+    fontFamily: 'Satoshi',
+    fontSize: 16,
+    fontStyle: 'normal',
+    fontWeight: 400,
+    lineHeight: 22.4,
+    color: '#F7FAF8',
+    opacity: 0.7,
+    backdropFilter: 'blur(2px)',
+    marginLeft: "10%",
+  },
+  popular: {
+    fontFamily: 'Satoshi',
+    fontSize: 24,
+    fontStyle: 'normal',
+    fontWeight: 500,
+    lineHeight: 28.8,
+    color: '#fff',
+    marginTop: 425.5,
+    marginLeft: '10%',
+    marginBottom: 20.5
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+  },
 });
 
-export default ProfileScreen;
+export default wellness;

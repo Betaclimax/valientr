@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { Dimensions, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
 const { height } = Dimensions.get('window');
 
 export default function App() {
@@ -53,21 +53,24 @@ export default function App() {
           style={styles.logo}
           resizeMode="contain"
         />
-        <View style={styles.card}>
-          <View style={styles.scard}>
-            <Text style={styles.title}>{currentPageData.title}</Text>
-            <Text style={styles.description}>{currentPageData.description}</Text>
-          </View>
-          <TouchableOpacity style={styles.button} onPress={handleGetStarted}>
-            <Text style={styles.buttonText}>Get started</Text>
-          </TouchableOpacity>
-          <View style={styles.loginContainer}>
-            <Text style={styles.loginText}>Already have an account?</Text>
-            <TouchableOpacity onPress={() => router.push('/login/login')}>
-              <Text style={styles.loginLink}>Log In</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+          {/* <BlurView intensity={23} tint='light' experimentalBlurMethod='dimezisBlurView' style={styles.blurWrap}> */}
+            <View style={styles.card}>
+              <View style={styles.scard}>
+                <Text style={styles.title}>{currentPageData.title}</Text>
+                <Text style={styles.description}>{currentPageData.description}</Text>
+              </View>
+              <TouchableOpacity style={styles.button} onPress={handleGetStarted}>
+                <Text style={styles.buttonText}>Get started</Text>
+              </TouchableOpacity>
+              <View style={styles.loginContainer}>
+                <Text style={styles.loginText}>Already have an account?</Text>
+                <TouchableOpacity onPress={() => router.push('/login/login')}>
+                  <Text style={styles.loginLink}>Log In</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          {/* </BlurView> */}
+        
         <View style={styles.dots}>
           {pages.map((_, index) => (
             <View
@@ -125,7 +128,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: 'satoshi',
     color: '#ffffff',
-    fontWeight: 700,
+    fontWeight: 600,
     textAlign: 'center',
     lineHeight: 28.80,
     wordWrap: 'break-word',
@@ -200,4 +203,20 @@ const styles = StyleSheet.create({
     height: 100,
     width: '100%',
   },
+  blurWrap: {
+    overflow: 'hidden',  
+    display: 'flex',
+    width: 327,
+    paddingLeft: 16,
+    paddingRight: 32,
+    marginLeft: 40,
+    marginTop: 433,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 32,
+    backgroundColor: 'rgba(255, 255, 255, 0.09)',
+    boxShadow: '0px -1px 2px 0px rgba(255,255,255,0.15) inset, 1px 1px 2px 0px rgba(255, 255, 255, 0.30) inset, 0px 4px 16px 0px rgba(0,0,0,0.08)',
+    backdropFilter: 'blur(15px)',   
+  }
 });
