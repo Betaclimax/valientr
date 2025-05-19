@@ -251,7 +251,6 @@ export default function SignupScreen() {
   };
 
   const handlePhoneNumberChange = (text: string) => {
-    // Remove the country code and any non-digit characters from the input
     const numbersOnly = text.replace(countryCode, '').replace(/[^0-9]/g, '');
     setPhoneNumber(numbersOnly);
   };
