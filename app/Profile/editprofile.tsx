@@ -1,3 +1,4 @@
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { Image, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -7,8 +8,10 @@ export default function editporfile() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [dateOfBirth, setDateOfBirth] = useState<Date | null>(null);
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const handleContinue = () => {
     if (password !== confirmPassword) {
@@ -20,6 +23,21 @@ export default function editporfile() {
 
   const handleForgotPassword = () => {
     console.log('Forgot Password pressed');
+  };
+  const handleDateChange = (_event: unknown, selectedDate?: Date | undefined) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      setDateOfBirth(selectedDate);
+    }
+  };
+
+  const formatDate = (date: Date | null) => {
+    if (!date) return '';
+    return date.toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
   };
 
   return (
@@ -61,13 +79,23 @@ export default function editporfile() {
             placeholderTextColor="#E4E4E4"
             autoCapitalize="none"
           />
-          <TouchableOpacity style={styles.eyeIcon}>
+          <TouchableOpacity style={styles.eyeIcon}
+            onPress={() => setShowDatePicker(true)}>
             <Image
               source={require('../../assets/icon/Calendar.png')}
               style={styles.calendarIcon}
             />
           </TouchableOpacity>
         </View>
+        {showDatePicker && (
+            <DateTimePicker
+            value={dateOfBirth || new Date()}
+            mode="date"
+            display="default"
+            onChange={handleDateChange}
+            maximumDate={new Date()}
+          />
+          )}
       </View>
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Gender</Text>

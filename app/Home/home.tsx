@@ -1,6 +1,8 @@
 import { useGlobalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Image, ImageBackground, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import Toast from 'react-native-toast-message';
+
 interface SpecialistButtonProps {
   name: string;
   image: any;
@@ -10,12 +12,19 @@ interface SpecialistButtonProps {
   index: number;
 }
 
+const CustomToast = ({ text1, text2 }: { text1: string; text2?: string }) => (
+  <View style={styles.customToastContainer}>
+    <View style={styles.customToastContent}>
+      <Text style={styles.customToastTitle}>{text1}</Text>
+      {text2 && <Text style={styles.customToastMessage}>{text2}</Text>}
+    </View>
+  </View>
+);
+
 export default function Home() {
   const { width } = useWindowDimensions();
   const [activeSpecialist, setActiveSpecialist] = useState('Cardiologist');
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
   const drawerAnimation = useRef(new Animated.Value(0)).current;
   const router = useRouter();
   const params = useGlobalSearchParams();
@@ -35,6 +44,16 @@ export default function Home() {
   }
   const goSpecialists = () => {
     router.push('../Viewall/viewall')
+  }
+  const goValAi = () => {
+    Toast.show({
+      type: 'custom',
+      text1: 'Val-AI is Almost Here!',
+      text2: 'Our AI-powered assistant will soon enhance your healthcare experience. Stay tuned!',
+      position: 'top',
+      visibilityTime: 5000,
+      topOffset: 60,
+    })
   }
 
   const cardAnimations = useRef(
@@ -78,11 +97,6 @@ export default function Home() {
 
   const currentPageData = pages[currentPage];
 
-  const getFirstLetter = (text: string) => {
-    if (!text) return '';
-    return text.charAt(0).toUpperCase();
-  };
-
   const getDrawerWidth = () => {
     if (width < 375) return width * 0.75;
     else if (width < 500) return width * 0.6;
@@ -103,11 +117,6 @@ export default function Home() {
     }).start();
     setIsDrawerOpen(!isDrawerOpen);
   };
-
-  const drawerTranslateX = drawerAnimation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [-drawerWidth, 0],
-  });
 
   const SpecialistButton = ({
     name,
@@ -319,7 +328,7 @@ export default function Home() {
           />
           <Text style={styles.menuText}>Inbox</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem}>
+        <TouchableOpacity style={styles.menuItem} onPress={goValAi}>
           <Image
             source={require('../../assets/icon/ri_voice-ai-fill.png')}
             style={{ width: 24, height: 24 }}
@@ -327,6 +336,11 @@ export default function Home() {
           <Text style={styles.menuText}>Val-AI</Text>
         </TouchableOpacity>
       </View>
+      <Toast
+        config={{
+          custom: ({ text1, text2 }) => <CustomToast text1={text1 ?? ''} text2={text2} />,
+        }}
+      />
     </View>
   );
 }
@@ -699,5 +713,38 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
   },
-  
+  customToastContainer: {
+    width: '90%',
+    maxWidth: 400,
+    backgroundColor: '#D4E5D9',
+    borderRadius: 16,
+    padding: 16,
+    marginHorizontal: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 5,
+    borderWidth: 1,
+    borderColor: '#9BB9A3',
+  },
+  customToastContent: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+  },
+  customToastTitle: {
+    fontFamily: 'Satoshi',
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#3D3D3D',
+    lineHeight: 20,
+    marginBottom: 4,
+  },
+  customToastMessage: {
+    fontFamily: 'Satoshi',
+    fontSize: 14,
+    fontWeight: '400',
+    color: '#3D3D3D',
+    lineHeight: 18,
+  },
 });

@@ -2,15 +2,6 @@ import { useGlobalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 
-interface SpecialistButtonProps {
-  name: string;
-  image: any;
-  activeCount: number;
-  isActive: boolean;
-  onPress: () => void;
-  index: number;
-}
-
 export default function booking() {
   const { width } = useWindowDimensions();
   const [activeSpecialist, setActiveSpecialist] = useState('Cardiologist');
@@ -71,30 +62,6 @@ export default function booking() {
     inputRange: [0, 1],
     outputRange: [-drawerWidth, 0],
   });
-
-  const SpecialistButton = ({
-    name,
-    image,
-    activeCount,
-    isActive,
-    onPress,
-    index,
-  }: SpecialistButtonProps) => {
-    const translateX = cardAnimations[index].interpolate({
-      inputRange: [0, 1],
-      outputRange: [width, 0],
-    });
-
-    const opacity = cardAnimations[index].interpolate({
-      inputRange: [0, 1],
-      outputRange: [0, 1],
-    });
-
-    const scale = cardAnimations[index].interpolate({
-      inputRange: [0, 1],
-      outputRange: [0.9, 1],
-    });
-  };
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -320,14 +287,14 @@ const styles = StyleSheet.create({
     color: '#A9A9A9',
     width: 40,
     textAlign: 'center',
-    marginHorizontal: 7
+    marginHorizontal: 5
   },
   calendarDay: {
     width: 40,
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 7,
+    marginHorizontal: 5,
   },
   dayText: {
     fontSize: 14,
@@ -339,7 +306,7 @@ const styles = StyleSheet.create({
     lineHeight: 14,
   },
   highlightedDay: {
-    backgroundColor: '#E8F0E8',
+    backgroundColor: '#D0E1D4',
     borderRadius: 20,
   },
   highlightedDayText: {
@@ -411,69 +378,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: 'rgba(0,0,0,0.5)',
     zIndex: 999,
-  },
-  specialistSection: {
-    paddingHorizontal: 16,
-    backgroundColor: '#fff',
-    marginBottom: 30,
-  },
-  sectionTitleContainer: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignSelf: 'stretch',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 5,
-  },
-  specialistGrid: {
-    flexDirection: 'row',
-    paddingHorizontal: 8,
-  },
-  specialistItem: {
-    width: 168,
-    marginRight: 8,
-  },
-  imageContainer: {
-    position: 'relative',
-    height: 45,
-    alignItems: 'center',
-  },
-  specialistImage: {
-    width: 100,
-    height: 100,
-    position: 'absolute',
-    top: 25,
-    zIndex: 2,
-  },
-  specialistCard: {
-    backgroundColor: 'rgba(193, 225, 204, 0.32)',
-    width: 168,
-    height: 120,
-    borderRadius: 24,
-    padding: 10,
-    paddingTop: 80,
-    alignItems: 'center',
-  },
-  specialistCardInactive: {},
-  specialistCardActive: {
-    backgroundColor: '#D4E5D9',
-    backgroundImage: 'linear-gradient(to bottom, #D4E9D4 0%, #C4D9C4 50%, #B4C9B4 100%)',
-  },
-  cardTop: {
-    flex: 1,
-    height: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  specialistName: {
-    fontSize: 14,
-    fontFamily: 'Satoshi',
-    fontWeight: '400',
-    color: '#3D3D3D',
-    lineHeight: 16.8,
-    textAlign: 'center',
-    fontStyle: 'normal',
   },
   plusIcon: {
     display: 'flex',

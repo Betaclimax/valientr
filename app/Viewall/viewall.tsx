@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     marginBottom: 26,
   },
   headerText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '500',
     color: '#333',
     fontFamily: 'Satoshi',
