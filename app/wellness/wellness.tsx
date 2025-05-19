@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
   },
   wellness: {
     fontFamily: 'Satoshi',
-    fontSize: 32,
+    fontSize: 30,
     fontStyle: 'normal',
     fontWeight: 700,
     lineHeight:38.4,
@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
   },
   wellnessdes: {
     fontFamily: 'Satoshi',
-    fontSize: 16,
+    fontSize: 14,
     fontStyle: 'normal',
     fontWeight: 400,
     lineHeight: 22.4,

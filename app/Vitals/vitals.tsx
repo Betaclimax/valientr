@@ -33,7 +33,7 @@ const vitals = () => {
             <View style={styles.appointmentHeader}>
                 <Text style={styles.sectionTitle}>Latest Summary</Text>
                 <TouchableOpacity>
-                <Text style={styles.viewAllText}>See ALL</Text>
+                  <Text style={styles.viewAllText}>See ALL</Text>
                 </TouchableOpacity>
             </View>
         </View>

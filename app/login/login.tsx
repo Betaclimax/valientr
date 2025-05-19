@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { Image, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -10,6 +11,14 @@ export default function LoginScreen() {
 
   const handleContinue = () => {
     console.log('Continue pressed', { email, password });
+    Toast.show({
+      type: 'success',
+      text1: 'Welcome to Valiant',
+      position: 'top',
+      visibilityTime: 5000,
+      autoHide: true,
+      topOffset: 60,
+    });
     router.push('../Home/home');
   };
 
